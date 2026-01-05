@@ -1,0 +1,23 @@
+Server
+=================================================
+- Atlieka apskaiciavimus
+- Parernka zaideju vietos 
+- Siuncia klausimus pas klienta kartu su atsakymu
+- Sugeneruoja UUID kiekvienam klientui
+=================================================
+
+Client
+=================================================
+- Gauna UUID is serverio
+- Atsakimas yra parodytas kai atsako
+=================================================
+
+
+
+Zaidumo etapai 
+
+1. Klientas registruotas i serveri 
+2. Klientas gauna vietos sedine 
+3. Kai zaidimas prasideda, serveris issiuncia klausima kartu su atsakymu
+4. Klientas atsako i klausima
+5. Kliento backend tikrina ar atsakymas teisingas
