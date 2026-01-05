@@ -1,6 +1,7 @@
 import socket
 import threading
 import json
+
 HOST = "0.0.0.0"
 PORT = 6969
 
@@ -27,12 +28,13 @@ def handle_client(conn, addr):
                 msg_json = json.loads(message)
                 if msg_json.get("type") == "name":
                     clients[conn] = msg_json.get("variable")
-                    print(f"Player joined: {clients[conn]}")
+                    print(f"Player name: {clients[conn]}")
                     conn.sendall(b"Name received!")
             except json.JSONDecodeError:
-                num=1+num
-                send_msg = f"New Raspberry Pi message {num}"
-                conn.sendall(send_msg.encode()) 
+                # num=1+num
+                print(f"New message: {message}")
+                # send_msg = f"New Raspberry Pi message {num}"
+                # conn.sendall(send_msg.encode()) 
 
         except ConnectionResetError:
             break
