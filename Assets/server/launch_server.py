@@ -3,7 +3,10 @@ import threading
 import json
 
 HOST = "0.0.0.0"
-PORT = 6969
+PORT = 7777
+
+
+MaxNumOfClients = 5
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind((HOST, PORT))
@@ -12,34 +15,65 @@ server.listen()
 local_ip = socket.gethostbyname(socket.gethostname())
 print(f"Local IP: {local_ip}")
 print(f"PORT: {PORT}")
-num=0
+
 clients ={}
+
+
+def SendToAllClients(message):
+    message = json.dumps(message).encode()
+    for conn in list(clients.keys()):  # Use list() to avoid runtime dict change issues
+        conn.sendall(message+b"\n")
+
+def Question():
+    # message = {"type": "question", "variable": "What is 2 + 2?"}
+    message={
+        "question": "Kiek bus 2 + 2?",
+        "answer": 0,
+        "choices": [
+        "3",
+        "4",
+        "5",
+        "6"
+      ],
+    }   
+    SendToAllClients(message)
+
+        
+submited_answers=0
+
 def handle_client(conn, addr):
-    print(f"Client connected: {addr}")
-    global num 
+    global submited_answers
     while True:
         try:
             data = conn.recv(1024)
             if not data:
                 break
-
             message = data.decode()
             try:
+
                 msg_json = json.loads(message)
-                if msg_json.get("type") == "name":
-                    clients[conn] = msg_json.get("variable")
-                    print(f"Player name: {clients[conn]}")
-                    conn.sendall(b"Name received!")
+                var=msg_json.get("variable")
+
+                match msg_json.get("type"):
+                    case "name":
+                        clients[conn] = {"name":var, "score":0}
+                        msg = {"total": (len(clients))}
+                        SendToAllClients(msg)
+                        print(f"{clients[conn]}")
+                    case "answer":
+                        clients[conn]["score"] += 1 if var == "true" else 0
+                        # print(f"Answer id {msg_json.get('variable')}")
+                    # conn.sendall(b"Name received!")
             except json.JSONDecodeError:
                 # num=1+num
-                print(f"New message: {message}")
-                # send_msg = f"New Raspberry Pi message {num}"
-                # conn.sendall(send_msg.encode()) 
+                print("\033[91mNezinau ka cia man atsiuntei...\033[0m :\n", json.dumps(json.loads(message),indent=2), "\n")
 
+            if (len(clients) >= MaxNumOfClients):
+                Question()
         except ConnectionResetError:
             break
 
-    print("Client disconnected:", addr," ", clients[conn])
+    print("Client disconnected:", clients[conn]["name"]," from ", addr)
     clients.pop(conn, None)
     conn.close()
 

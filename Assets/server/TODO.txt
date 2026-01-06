@@ -2,14 +2,47 @@ Server
 =================================================
 - Atlieka apskaiciavimus
 - Parernka zaideju vietos 
-- Siuncia klausimus pas klienta kartu su atsakymu
-- Sugeneruoja UUID kiekvienam klientui
+- Siuncia klausimus pas klienta kartu su atsakymu ir timerTrigger
+
+- Add point when first answer
+
+- Apskaiciuti Score
+- Sauga Name
+
+
+
+json file example 
+
+{
+  "question": "Kiek bus 2 + 2?",
+  "answer": "4",
+  "problems": [
+    "3",
+    "4",
+    "5",
+    "6"
+  ],
+}
+
 =================================================
 
 Client
 =================================================
-- Gauna UUID is serverio
+- Timer 30s
 - Atsakimas yra parodytas kai atsako
+json example 
+
+
+Intitial sent from server to client
+{
+    "name":"PP"
+}
+
+Game sent
+
+{
+    "answer_correct": "0"
+}
 =================================================
 
 
