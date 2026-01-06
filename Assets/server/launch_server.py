@@ -75,6 +75,8 @@ def handle_client(conn, addr):
 
     print("Client disconnected:", clients[conn]["name"]," from ", addr)
     clients.pop(conn, None)
+    msg = {"total": (len(clients))}
+    SendToAllClients(msg)
     conn.close()
 
 while True:
