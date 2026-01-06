@@ -2,6 +2,9 @@ import socket
 import threading
 import json
 
+import subprocess
+import re
+
 HOST = "0.0.0.0"
 PORT = 7777
 
@@ -11,8 +14,21 @@ MaxNumOfClients = 5
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind((HOST, PORT))
 server.listen()
-
 local_ip = socket.gethostbyname(socket.gethostname())
+
+def get_wifi_name():
+    try:
+        output = subprocess.check_output(
+            ["iw", "dev"],
+            stderr=subprocess.DEVNULL
+        ).decode()
+
+        match = re.search(r"ssid (.+)", output)
+        return match.group(1) if match else None
+    except subprocess.CalledProcessError:
+        return None
+
+print(f"Prisijunk Per: {get_wifi_name()}")
 print(f"Local IP: {local_ip}")
 print(f"PORT: {PORT}")
 
