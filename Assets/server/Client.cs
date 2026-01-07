@@ -3,12 +3,6 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
-// [System.Serializable]
-// public class PlayerData
-// {
-//     public string type; // "name"
-//     public string variable; // player's name
-// }
 [System.Serializable]
 public class MessageData
 {
@@ -18,19 +12,17 @@ public class MessageData
 
 public class Client : MonoBehaviour
 {
-    [SerializeField]
+    [Header("Server")]
     public string ServerIP = "192.168.4.1";
     public ushort ServerPort = 7777;
-
+    [Header("Player")]
     public string name = "Ernis";
     private TcpClient client;
     private NetworkStream stream;
 
-    // public Button myButton;
 
     public void StartGame()
     {
-        // Debug.Log("Start Game");
         Send("start");
     }
 
@@ -39,7 +31,6 @@ public class Client : MonoBehaviour
         Send("answer", choice);
     }
 
-    // void SendJson(PlayerData data) { }
 
     void Send(string type, string variable="")
     {
@@ -51,10 +42,17 @@ public class Client : MonoBehaviour
 
     void Start()
     {
-        // myButton.onClick.AddListener(OnButtonClick);
-        Connect();
+        try
+        {
+            Connect();
+        }
+        catch (SocketException e)
+        {
+            Debug.LogError("Neijungtas serveris/ne tas tinklas" );
+            return;
+        }
+
         Send("name", name);
-        // StartGame();
     }
 
     void Connect()
