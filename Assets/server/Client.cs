@@ -13,8 +13,8 @@ public class PlayerData
 public class Client : MonoBehaviour
 {
     [SerializeField]
-    public string ServerIP = "192.168.1.69";
-    public ushort ServerPort = 6969;
+    public string ServerIP = "192.168.4.1";
+    public ushort ServerPort = 7777;
     private TcpClient client;
     private NetworkStream stream;
     public Button myButton;

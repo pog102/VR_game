@@ -3838,8 +3838,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef2320e6b4e84d2d7a8b793d402f7d41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Client
-  ServerIP: 192.168.1.69
-  ServerPort: 6969
+  ServerIP: 192.168.4.1
+  ServerPort: 7777
   myButton: {fileID: 1846592891}
 --- !u!1 &2069734784
 GameObject:

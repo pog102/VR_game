@@ -1,7 +1,7 @@
 import socket
 import threading
 import json
-
+import random
 import subprocess
 import re
 
@@ -15,6 +15,11 @@ server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind((HOST, PORT))
 server.listen()
 local_ip = socket.gethostbyname(socket.gethostname())
+
+
+with open("questions.json", "r", encoding="utf-8") as f:
+    question_data = json.load(f)
+random.shuffle(question_data)
 
 def get_wifi_name():
     try:
@@ -42,17 +47,17 @@ def SendToAllClients(message):
 
 def Question():
     # message = {"type": "question", "variable": "What is 2 + 2?"}
-    message={
-        "question": "Kiek bus 2 + 2?",
-        "answer": 0,
-        "choices": [
-        "3",
-        "4",
-        "5",
-        "6"
-      ],
-    }   
-    SendToAllClients(message)
+    # message={
+    #     "question": "Kiek bus 2 + 2?",
+    #     "answer": 0,
+    #     "choices": [
+    #     "3",
+    #     "4",
+    #     "5",
+    #     "6"
+    #   ],
+    # }   
+    SendToAllClients(question_data[-1])
 
         
 submited_answers=0
