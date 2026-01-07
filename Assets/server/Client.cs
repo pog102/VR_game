@@ -34,9 +34,9 @@ public class Client : MonoBehaviour
         Send("start");
     }
 
-    public void SelectChoice()
+    public void SelectChoice(string choice)
     {
-        Send("answer", "C");
+        Send("answer", choice);
     }
 
     // void SendJson(PlayerData data) { }

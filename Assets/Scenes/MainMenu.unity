@@ -3553,7 +3553,7 @@ GameObject:
   - component: {fileID: 1785923961}
   - component: {fileID: 1785923960}
   m_Layer: 5
-  m_Name: Button
+  m_Name: StartButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3686,7 +3686,7 @@ GameObject:
   - component: {fileID: 1846592892}
   - component: {fileID: 1846592891}
   m_Layer: 5
-  m_Name: SendToServer
+  m_Name: ChoiceButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3739,13 +3739,13 @@ MonoBehaviour:
       - m_Target: {fileID: 1924971249}
         m_TargetAssemblyTypeName: Client, Assembly-CSharp
         m_MethodName: SelectChoice
-        m_Mode: 1
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: C
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1846592892
