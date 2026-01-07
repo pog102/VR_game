@@ -31,19 +31,19 @@ public class Client : MonoBehaviour
     public void StartGame()
     {
         // Debug.Log("Start Game");
-        Send(new MessageData { type = "start" });
+        Send("start");
     }
 
     public void SelectChoice()
     {
-        Send(new MessageData { type = "answer", variable = "C" });
+        Send("answer", "C");
     }
 
     // void SendJson(PlayerData data) { }
 
-    void Send(MessageData data)
+    void Send(string type, string variable="")
     {
-        string json = JsonUtility.ToJson(data);
+        string json = JsonUtility.ToJson(new MessageData { type = type,variable = variable });
         Debug.Log(json.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(json + "\n");
         stream.Write(bytes, 0, bytes.Length);
@@ -53,7 +53,7 @@ public class Client : MonoBehaviour
     {
         // myButton.onClick.AddListener(OnButtonClick);
         Connect();
-        Send(new MessageData { type = "name", variable = name });
+        Send("name", name);
         // StartGame();
     }
 
