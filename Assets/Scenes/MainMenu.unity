@@ -3139,7 +3139,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &397209784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4396,7 +4396,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &546860542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10583,7 +10583,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1585747573
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12487,7 +12487,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1924971248
 Transform:
   m_ObjectHideFlags: 0
@@ -12517,7 +12517,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Client
   ServerIP: 192.168.4.1
   ServerPort: 7777
-  name: Ernis
+  name: Kazkas
 --- !u!1 &1961848769
 GameObject:
   m_ObjectHideFlags: 0
