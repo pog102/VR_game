@@ -12,15 +12,13 @@ public class MessageData
 
 public class Client : MonoBehaviour
 {
+    public static Client Instance;
     [Header("Server")]
     public string ServerIP = "192.168.4.1";
     public ushort ServerPort = 7777;
-    [Header("Player")]
-    public string name = "Ernis";
     private TcpClient client;
     private NetworkStream stream;
-
-
+    private ServerLabel serverLabel; // Reference to label in current scene
     public void StartGame()
     {
         Send("start");
@@ -31,8 +29,17 @@ public class Client : MonoBehaviour
         Send("answer", choice);
     }
 
-
-    void Send(string type, string variable="")
+void Awake()
+{
+     if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+     Instance = this;
+    DontDestroyOnLoad(gameObject);
+}
+    public void Send(string type, string variable="")
     {
         string json = JsonUtility.ToJson(new MessageData { type = type,variable = variable });
         Debug.Log(json.ToString());
@@ -52,7 +59,7 @@ public class Client : MonoBehaviour
             return;
         }
 
-        Send("name", name);
+        // Send("name", name);
     }
 
     void Connect()
@@ -63,12 +70,20 @@ public class Client : MonoBehaviour
 
     void Update()
     {
+          if (serverLabel == null)
+        {
+                        serverLabel = FindObjectOfType<ServerLabel>();
+        }
         if (stream != null && stream.DataAvailable)
         {
             byte[] buffer = new byte[1024];
             int bytes = stream.Read(buffer, 0, buffer.Length);
             string msg = Encoding.UTF8.GetString(buffer, 0, bytes);
             Debug.Log("Server says: " + msg);
+            if (serverLabel != null)
+            {
+                serverLabel.UpdateLabel(msg);
+            }
         }
     }
 
