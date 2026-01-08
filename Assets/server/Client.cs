@@ -2,7 +2,7 @@ using System.Net.Sockets;
 using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
-
+using TMPro;
 [System.Serializable]
 public class MessageData
 {
@@ -16,6 +16,8 @@ public class Client : MonoBehaviour
     [Header("Server")]
     public string ServerIP = "192.168.4.1";
     public ushort ServerPort = 7777;
+    [Header("ErrorMeesage")]
+    public GameObject ErrorMeesage;
     private TcpClient client;
     private NetworkStream stream;
     private ServerLabel serverLabel; // Reference to label in current scene
@@ -55,7 +57,11 @@ void Awake()
         }
         catch (SocketException e)
         {
-            Debug.LogError("Neijungtas serveris/ne tas tinklas" );
+            if (ErrorMeesage != null)
+            {
+                ErrorMeesage.SetActive(true);
+            }
+            // Debug.LogError("Neijungtas serveris/ne tas tinklas" );
             return;
         }
 
