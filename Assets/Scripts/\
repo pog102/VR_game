@@ -1,0 +1,40 @@
+using System.Net.Sockets;
+using UnityEngine;
+
+public class ShowErrorPingPanel : MonoBehaviour
+{
+    public string serverIP = "192.168.1.69";
+    public ushort serverPort = 7777;
+    public GameObject errorMessage;
+
+    private TcpClient client;
+    private NetworkStream stream;
+    void Connect()
+    {
+        client = new TcpClient(ServerIP, ServerPort);
+        stream = client.GetStream();
+    }
+    void Start()
+    {
+        // StaticData.IP = serverIP;
+        // StaticData.PORT = serverPort;
+        CheckServer();
+    }
+  void CheckServer()
+    {
+        try
+        {
+            using (TcpClient client = new TcpClient())
+            {
+                client.Connect(serverIP, serverPort);
+                Debug.Log("Server is ONLINE!");
+            }
+        }
+        catch (SocketException)
+        {
+            errorMessage.SetActive(true);
+
+        }
+    }
+}
+
