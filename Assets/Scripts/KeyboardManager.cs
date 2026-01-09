@@ -38,7 +38,7 @@ public class KeyboardManager : MonoBehaviour
     public void Submit()
     {
         
-        client.Send("name", targetInput.text);
+        client.Send("name", targetInput.text,"Male");
         SceneManager.LoadScene("Game");
         // client.Send("name", "BOB");
     }

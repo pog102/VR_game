@@ -8,6 +8,7 @@ public class MessageData
 {
     public string type;
     public string variable;
+    public string gender;
 }
 
 public class Client : MonoBehaviour
@@ -41,9 +42,9 @@ void Awake()
      Instance = this;
     DontDestroyOnLoad(gameObject);
 }
-    public void Send(string type, string variable="")
+    public void Send(string type, string variable="",string gender="")
     {
-        string json = JsonUtility.ToJson(new MessageData { type = type,variable = variable });
+        string json = JsonUtility.ToJson(new MessageData { type = type,variable = variable, gender=gender });
         Debug.Log(json.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(json + "\n");
         stream.Write(bytes, 0, bytes.Length);
