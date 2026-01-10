@@ -483,7 +483,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8135023674665499069, guid: 58d0a4ac86f2348deb02f3880c71378e, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8518324294302271954, guid: 58d0a4ac86f2348deb02f3880c71378e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -11951,7 +11951,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 955c51b13880e33c2abca3ba39916da3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShowErrorPingPanel
-  serverIP: 192.168.1.69
+  serverIP: 192.168.4.1
   serverPort: 7777
   errorMessage: {fileID: 717544726}
 --- !u!4 &1792255150
