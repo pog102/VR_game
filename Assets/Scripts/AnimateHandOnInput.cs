@@ -1,8 +1,9 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Unity.Netcode;
 
-public class AnimateHandOnInput : NetworkBehaviour
+// using Unity.Netcode;
+
+public class AnimateHandOnInput : MonoBehaviour
 {
     public InputActionProperty triggerValue;
     public InputActionProperty gripValue;
@@ -14,7 +15,7 @@ public class AnimateHandOnInput : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!IsOwner) return;
+        // if (!IsOwner) return;
         float trigger = triggerValue.action.ReadValue<float>();
         float grip = gripValue.action.ReadValue<float>();
         handAnimator.SetFloat("Trigger", trigger);

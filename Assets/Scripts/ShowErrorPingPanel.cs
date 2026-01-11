@@ -9,14 +9,16 @@ public class ShowErrorPingPanel : MonoBehaviour
 
     void Connect()
     {
-       TcpClient client = new TcpClient(serverIP, serverPort);
-        StaticData.client = client;
-        StaticData.stream = client.GetStream();
+        // TcpClient client = new TcpClient(serverIP, serverPort);
+        //  StaticData.client = client;
+        //  StaticData.stream = client.GetStream();
     }
+
     void Start()
     {
         CheckServer();
     }
+
     void CheckServer()
     {
         try
@@ -25,9 +27,7 @@ public class ShowErrorPingPanel : MonoBehaviour
         }
         catch (SocketException)
         {
-            errorMessage.SetActive(true);
-
+            // errorMessage.SetActive(true);
         }
     }
 }
-
