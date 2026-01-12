@@ -449,7 +449,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8135023674665499069, guid: 58d0a4ac86f2348deb02f3880c71378e, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8518324294302271954, guid: 58d0a4ac86f2348deb02f3880c71378e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -11683,7 +11683,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3d6ed9a45aedd4db837f2b59b55e6f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AnimateHandOnInput
-  ShowTopMostFoldoutHeaderGroup: 1
   triggerValue:
     m_UseReference: 1
     m_Action:
@@ -12428,7 +12427,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3d6ed9a45aedd4db837f2b59b55e6f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  ShowTopMostFoldoutHeaderGroup: 1
   triggerValue:
     m_UseReference: 1
     m_Action:
