@@ -41,8 +41,8 @@ public class KeyboardManager : MonoBehaviour
 
     public void Submit()
     {
-        // StaticData.playerName = targetInput.text;
-        // StaticData.Gender = "Male";
-        // SceneManager.LoadScene("Game");
+        Globals.playerName = targetInput.text;
+        Globals.gender = "Male";
+        SceneManager.LoadScene("Game");
     }
 }

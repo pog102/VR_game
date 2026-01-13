@@ -1,18 +1,54 @@
 using System.Collections;
 using Unity.Netcode;
+using Unity.Netcode.Transports.UTP;
 using UnityEngine;
+using UnityEngine.XR;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class Server : NetworkBehaviour
 {
+    public enum IPOptions
+    {
+        Server,
+        Client,
+        Test,
+    }
+
+    [SerializeField]
+    private IPOptions selectedIP = IPOptions.Server;
+
+    // Returns the actual IP as a string
+    public string ClientIP
+    {
+        get
+        {
+            switch (selectedIP)
+            {
+                case IPOptions.Server:
+                    return "0.0.0.0";
+                case IPOptions.Client:
+                    return "192.168.1.4";
+                case IPOptions.Test:
+                    return "192.168.1.69";
+                default:
+                    return "0.0.0.0";
+            }
+        }
+    }
+
+    [SerializeField]
+    UnityTransport transport;
+
     void Start()
     {
-        string[] args = System.Environment.GetCommandLineArgs();
-        for (int i = 0; i < args.Length; i++)
+        SetIpAddress();
+        if (selectedIP == IPOptions.Server)
         {
-            if (args[i] == "-server")
-            {
-                StartServer();
-            }
+            StartServer();
+        }
+        else
+        {
+            StartClient();
         }
     }
 
@@ -20,9 +56,13 @@ public class Server : NetworkBehaviour
     {
         Debug.Log("Starting server...");
         NetworkManager.Singleton.StartServer();
-        // Serverines Logs
         NetworkManager.Singleton.OnClientConnectedCallback += ClientConnectMessage;
-        SendClientRpc("Just a send");
+    }
+
+    public void SetIpAddress()
+    {
+        transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
+        transport.ConnectionData.Address = ClientIP;
     }
 
     public void StartClient()
@@ -33,14 +73,26 @@ public class Server : NetworkBehaviour
 
     public void ClientConnectMessage(ulong connectionId)
     {
-        // Serverines Logs
-        Debug.Log("------ client " + connectionId + " connected.");
+        Debug.Log("client " + connectionId + " connected.");
     }
 
-    [ClientRpc]
-    public void SendClientRpc(string message)
+    public override void OnNetworkSpawn()
     {
-        // Kliento Logs (siunciamas klientui is serverio)
-        Debug.Log("Message from server: " + message);
+        if (IsClient)
+        {
+            SubmitPlayerDataServerRpc(Globals.playerName, Globals.gender);
+        }
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void SubmitPlayerDataServerRpc(
+        string playerName,
+        string gender,
+        ServerRpcParams rpcParams = default
+    )
+    {
+        ulong clientId = rpcParams.Receive.SenderClientId;
+
+        Debug.Log($"[SERVER] Client {clientId} | Name: {playerName} | Gender: {gender}");
     }
 }
