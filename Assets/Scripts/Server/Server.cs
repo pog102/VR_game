@@ -17,7 +17,6 @@ public class Server : NetworkBehaviour
     [SerializeField]
     private IPOptions selectedIP = IPOptions.Server;
 
-    // Returns the actual IP as a string
     public string ClientIP
     {
         get
@@ -39,6 +38,8 @@ public class Server : NetworkBehaviour
     [SerializeField]
     UnityTransport transport;
 
+    private int totalPlayers = 0;
+
     void Start()
     {
         SetIpAddress();
@@ -57,6 +58,7 @@ public class Server : NetworkBehaviour
         Debug.Log("Starting server...");
         NetworkManager.Singleton.StartServer();
         NetworkManager.Singleton.OnClientConnectedCallback += ClientConnectMessage;
+        NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
     }
 
     public void SetIpAddress()
@@ -74,6 +76,20 @@ public class Server : NetworkBehaviour
     public void ClientConnectMessage(ulong connectionId)
     {
         Debug.Log("client " + connectionId + " connected.");
+        Debug.Log($"total players: {NetworkManager.Singleton.ConnectedClients.Count}.");
+        SendToClientRpc("Welcome to the server!");
+    }
+
+    private void OnClientDisconnected(ulong clientId)
+    {
+        Debug.Log($"Client disconnected: {clientId}.");
+        Debug.Log($"total players: {NetworkManager.Singleton.ConnectedClients.Count}.");
+    }
+
+    [Rpc(SendTo.NotServer)]
+    public void SendToClientRpc(string message)
+    {
+        Debug.Log($"[CLIENT] Received message from server: {message}");
     }
 
     public override void OnNetworkSpawn()
