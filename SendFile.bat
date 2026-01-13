@@ -1,4 +1,10 @@
 @echo off
 
-scp .\server.x86_64 vruser@172.16.19.167:/home/vruser/
+set USER=vruser
+set HOST=172.16.19.69
+set REMOTE_PATH=/home/vruser/
+set LOCAL_FILE=server\
+
+scp -r "%LOCAL_FILE%" %USER%@%HOST%:%REMOTE_PATH%
+
 
