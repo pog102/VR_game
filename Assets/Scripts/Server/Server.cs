@@ -12,6 +12,7 @@ public class Server : NetworkBehaviour
         Server,
         Client,
         Test,
+        Test2,
     }
 
     [SerializeField]
@@ -26,9 +27,11 @@ public class Server : NetworkBehaviour
                 case IPOptions.Server:
                     return "0.0.0.0";
                 case IPOptions.Client:
-                    return "192.168.1.4";
+                    return "192.168.4.1";
                 case IPOptions.Test:
                     return "192.168.1.69";
+                case IPOptions.Test2:
+                    return "172.16.19.167";
                 default:
                     return "0.0.0.0";
             }
