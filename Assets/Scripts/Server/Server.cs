@@ -42,20 +42,9 @@ public class Server : NetworkBehaviour
     UnityTransport transport;
 
     private int totalPlayers = 0;
-    [SerializeField]
-    private QuizTcpClient quizClient;
 
     void Start()
     {
-        SetIpAddress();
-        if (quizClient == null)
-        {
-            quizClient = GetComponent<QuizTcpClient>();
-            if (quizClient == null)
-            {
-                quizClient = gameObject.AddComponent<QuizTcpClient>();
-            }
-        }
         if (selectedIP == IPOptions.Server)
         {
             StartServer();
@@ -105,23 +94,37 @@ public class Server : NetworkBehaviour
         Debug.Log($"[CLIENT] Received message from server: {message}");
     }
 
-    public override void OnNetworkSpawn()
-    {
-        if (IsClient)
-        {
-            SubmitPlayerDataServerRpc(Globals.playerName, Globals.gender);
-        }
-    }
+    // public override void OnNetworkSpawn()
+    // {
+    //     if (IsClient)
+    //     {
+    //         SubmitPlayerDataServerRpc(Globals.playerName, Globals.gender);
+    //     }
+    // }
 
-    [ServerRpc(RequireOwnership = false)]
-    private void SubmitPlayerDataServerRpc(
-        string playerName,
-        string gender,
-        ServerRpcParams rpcParams = default
-    )
-    {
-        ulong clientId = rpcParams.Receive.SenderClientId;
+    // public struct PlayerScoreData : INetworkSerializable
+    // {
+    //     public Unity.Collections.FixedString32Bytes playerName;
+    //     public int score;
+    //
+    //     // Required for Netcode to send this data over the internet
+    //     public void NetworkSerialize<T>(T serializer)
+    //         where T : IReaderWriter
+    //     {
+    //         serializer.SerializeValue(ref playerName);
+    //         serializer.SerializeValue(ref score);
+    //     }
+    // }
 
-        Debug.Log($"[SERVER] Client {clientId} | Name: {playerName} | Gender: {gender}");
-    }
+    // [ServerRpc(RequireOwnership = false)]
+    // private void SubmitPlayerDataServerRpc(
+    //     string playerName,
+    //     string gender,
+    //     ServerRpcParams rpcParams = default
+    // )
+    // {
+    //     ulong clientId = rpcParams.Receive.SenderClientId;
+    //
+    //     Debug.Log($"[SERVER] Client {clientId} | Name: {playerName} | Gender: {gender}");
+    // }
 }
