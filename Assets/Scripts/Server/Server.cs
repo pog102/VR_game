@@ -42,10 +42,20 @@ public class Server : NetworkBehaviour
     UnityTransport transport;
 
     private int totalPlayers = 0;
+    [SerializeField]
+    private QuizTcpClient quizClient;
 
     void Start()
     {
         SetIpAddress();
+        if (quizClient == null)
+        {
+            quizClient = GetComponent<QuizTcpClient>();
+            if (quizClient == null)
+            {
+                quizClient = gameObject.AddComponent<QuizTcpClient>();
+            }
+        }
         if (selectedIP == IPOptions.Server)
         {
             StartServer();
