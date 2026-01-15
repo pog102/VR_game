@@ -44,7 +44,7 @@ public class StartGameLoop : NetworkBehaviour
     );
     private NetworkVariable<int> currentQuestionIndex = new NetworkVariable<int>(0);
     private NetworkVariable<bool> isSumbmited = new NetworkVariable<bool>(false);
-    private NetworkVariable<float> timeRemaining = new NetworkVariable<float>(10f);
+    private NetworkVariable<float> timeRemaining = new NetworkVariable<float>(30f);
 
     // Server-side only score tracking
     private Dictionary<ulong, int> playerScores = new Dictionary<ulong, int>();
@@ -111,13 +111,13 @@ public class StartGameLoop : NetworkBehaviour
         if (currentState.Value == GameState.Results)
         {
             playersWhoAnswered.Clear();
-            timeRemaining.Value = 10f;
+            timeRemaining.Value = 30f;
             currentState.Value = GameState.Asking;
             UpdateWhiteboardClientRpc(currentQuestionIndex.Value);
         }
         else
         {
-            timeRemaining.Value = 6f;
+            timeRemaining.Value = 5f;
             currentState.Value = GameState.Results;
             ShowCorrectAnswerClientRpc(currentQuestionIndex.Value);
             currentQuestionIndex.Value++;

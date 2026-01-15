@@ -903,7 +903,77 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StartGameLoop
   ShowTopMostFoldoutHeaderGroup: 1
-  quizData: []
+  quizData:
+  - questionText: What is the capital of France?
+    answers:
+    - Berlin
+    - Paris
+    - Madrid
+    - Rome
+    correctAnswerIndex: 1
+  - questionText: Which planet is known as the Red Planet?
+    answers:
+    - Venus
+    - Mars
+    - Jupiter
+    - Saturn
+    correctAnswerIndex: 1
+  - questionText: What is 5 + 7?
+    answers:
+    - 10
+    - 11
+    - 12
+    - 13
+    correctAnswerIndex: 2
+  - questionText: Who wrote "Romeo and Juliet"?
+    answers:
+    - William Wordsworth
+    - William Shakespeare
+    - Charles Dickens
+    - Jane Austen
+    correctAnswerIndex: 1
+  - questionText: What is the chemical symbol for water?
+    answers:
+    - H2O
+    - CO2
+    - O2
+    - NaCl
+    correctAnswerIndex: 0
+  - questionText: How many continents are there on Earth?
+    answers:
+    - 5
+    - 6
+    - 7
+    - 8
+    correctAnswerIndex: 2
+  - questionText: Which gas do humans need to breathe?
+    answers:
+    - Oxygen
+    - Carbon Dioxide
+    - Nitrogen
+    - Hydrogen
+    correctAnswerIndex: 0
+  - questionText: Who painted the Mona Lisa?
+    answers:
+    - Vincent Van Gogh
+    - Pablo Picasso
+    - Leonardo da Vinci
+    - Claude Monet
+    correctAnswerIndex: 2
+  - questionText: What is the largest mammal in the world?
+    answers:
+    - Elephant
+    - Blue Whale
+    - Giraffe
+    - Great White Shark
+    correctAnswerIndex: 1
+  - questionText: What is the boiling point of water at sea level in Celsius?
+    answers:
+    - "90\xB0C"
+    - "100\xB0C"
+    - "110\xB0C"
+    - "120\xB0C"
+    correctAnswerIndex: 1
   whiteboardText: {fileID: 338906703}
   timerText: {fileID: 1239856353}
   chairPositions: []
