@@ -10,9 +10,13 @@ public class Server : NetworkBehaviour
     public enum IPOptions
     {
         Server,
+
+        [InspectorName("Client (wireless)")]
         Client,
-        Test,
+
+        [InspectorName("Client (wired)")]
         Test2,
+        Test,
     }
 
     [SerializeField]
@@ -45,14 +49,14 @@ public class Server : NetworkBehaviour
 
     void Start()
     {
-        // if (selectedIP == IPOptions.Server)
-        // {
-        //     StartServer();
-        // }
-        // else
-        // {
-        //     StartClient();
-        // }
+        if (selectedIP == IPOptions.Server)
+        {
+            StartServer();
+        }
+        else
+        {
+            StartClient();
+        }
     }
 
     public void StartServer()
