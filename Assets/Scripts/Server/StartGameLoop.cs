@@ -154,7 +154,8 @@ public class StartGameLoop : NetworkBehaviour
         if (localPlayer != null)
         {
             // Simple teleport (use a specific index or logic to avoid stacking)
-            int index = (int)NetworkManager.Singleton.LocalClientId % chairPositions.Length;
+            // int index = (int)NetworkManager.Singleton.LocalClientId % chairPositions.Length;
+            int index = (int)NetworkManager.Singleton.LocalClientId;
             localPlayer.transform.position = chairPositions[index].position;
             localPlayer.transform.rotation = chairPositions[index].rotation;
         }
