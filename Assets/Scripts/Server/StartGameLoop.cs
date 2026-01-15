@@ -63,14 +63,36 @@ public class StartGameLoop : NetworkBehaviour
     // }
 
     #region Game Logic
-
-    public override void OnNetworkSpawn()
+    public void Start()
     {
-        if (IsClient)
-        {
-            SubmitPlayerDataServerRpc(Globals.playerName, Globals.gender);
-        }
+        NetworkManager.Singleton.OnClientConnectedCallback += OnClinetConnectedClientRpc;
+        NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnectedClientRpc;
     }
+
+    [ClientRpc]
+    public void OnClinetConnectedClientRpc(ulong connectionId)
+    {
+        SubmitPlayerDataServerRpc(Globals.playerName, Globals.gender);
+        if (currentState.Value != GameState.Lobby)
+            return;
+        whiteboardText.text = $"Total:  {NetworkManager.Singleton.ConnectedClients.Count}";
+    }
+
+    [ClientRpc]
+    public void OnClientDisconnectedClientRpc(ulong connectionId)
+    {
+        if (currentState.Value != GameState.Lobby)
+            return;
+        whiteboardText.text = $"Total:  {NetworkManager.Singleton.ConnectedClients.Count}";
+    }
+
+    // public override void OnNetworkSpawn()
+    // {
+    //     if (IsClient)
+    //     {
+    //         SubmitPlayerDataServerRpc(Globals.playerName, Globals.gender);
+    //     }
+    // }
 
     [ServerRpc(RequireOwnership = false)]
     public void SubmitPlayerDataServerRpc(
@@ -92,16 +114,27 @@ public class StartGameLoop : NetworkBehaviour
         if (currentState.Value != GameState.Lobby)
             return;
 
-        // Initialize scores for all connected clients
-        // playerScores.Clear();
-        // foreach (var client in NetworkManager.Singleton.ConnectedClientsIds)
-        // {
-        //     playerScores.Add(client, 0);
-        // }
-
         // TeleportPlayersToChairsClientRpc();
+        currentState.Value = GameState.Results;
         StartNextQuestion();
     }
+
+    // private void StartNextAnswer()
+    // {
+    //     if (currentQuestionIndex.Value >= quizData.Count)
+    //     {
+    //         currentState.Value = GameState.GameOver;
+    //         // ShowLeaderboardClientRpc();
+    //         EndGameAndShowScores();
+    //         return;
+    //     }
+    //
+    //     currentState.Value = GameState.Results;
+    //     timeRemaining.Value = 6f;
+    //
+    //     UpdateWhiteboardClientRpc(currentQuestionIndex.Value);
+    //     // ShowCorrectAnswer(currentQuestionIndex.Value);
+    // }
 
     private void StartNextQuestion()
     {
@@ -112,12 +145,19 @@ public class StartGameLoop : NetworkBehaviour
             EndGameAndShowScores();
             return;
         }
-
-        currentState.Value = GameState.Asking;
-        timeRemaining.Value = 8f;
-
-        // Sync the UI across all clients
-        UpdateWhiteboardClientRpc(currentQuestionIndex.Value);
+        if (currentState.Value == GameState.Results)
+        {
+            timeRemaining.Value = 10f;
+            currentState.Value = GameState.Asking;
+            UpdateWhiteboardClientRpc(currentQuestionIndex.Value);
+        }
+        else
+        {
+            timeRemaining.Value = 6f;
+            currentState.Value = GameState.Results;
+            ShowCorrectAnswerClientRpc(currentQuestionIndex.Value);
+            currentQuestionIndex.Value++;
+        }
     }
 
     // [ClientRpc]
@@ -145,17 +185,29 @@ public class StartGameLoop : NetworkBehaviour
         if (!IsServer)
             return;
 
-        if (currentState.Value == GameState.Asking)
+        if (currentState.Value == GameState.Results || currentState.Value == GameState.Asking)
         {
             timeRemaining.Value -= Time.deltaTime;
             UpdateTimerUIClientRpc(Mathf.CeilToInt(timeRemaining.Value));
 
             if (timeRemaining.Value <= 0)
             {
-                currentQuestionIndex.Value++;
                 StartNextQuestion();
+                // ShowCorrectAnswer(currentQuestionIndex.Value);
             }
         }
+
+        // if (currentState.Value == GameState.Asking)
+        // {
+        //     timeRemaining.Value -= Time.deltaTime;
+        //     UpdateTimerUIClientRpc(Mathf.CeilToInt(timeRemaining.Value));
+        //
+        //     if (timeRemaining.Value <= 0)
+        //     {
+        //         currentQuestionIndex.Value++;
+        //         StartNextQuestion();
+        //     }
+        // }
     }
 
     #endregion
@@ -177,13 +229,28 @@ public class StartGameLoop : NetworkBehaviour
     }
 
     [ClientRpc]
-    private void ShowScoreBoardResultsClientRpc()
+    private void ShowCorrectAnswerClientRpc(int questionIndex)
     {
-        // var q = quizData[questionIndex];
-        // whiteboardText.text =
-        //     $"{q.questionText}\n\n"
-        //     + $"A: {q.answers[0]} | B: {q.answers[1]}\n"
-        //     + $"C: {q.answers[2]} | D: {q.answers[3]}";
+        char ans;
+        switch (quizData[questionIndex].correctAnswerIndex)
+        {
+            case 0:
+                ans = 'A';
+                break;
+            case 1:
+                ans = 'B';
+                break;
+            case 2:
+                ans = 'C';
+                break;
+            case 3:
+                ans = 'D';
+                break;
+            default:
+                ans = 'E';
+                break;
+        }
+        whiteboardText.text = "Correct Answer is: " + ans;
     }
 
     [ClientRpc]

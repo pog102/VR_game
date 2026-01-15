@@ -45,14 +45,14 @@ public class Server : NetworkBehaviour
 
     void Start()
     {
-        if (selectedIP == IPOptions.Server)
-        {
-            StartServer();
-        }
-        else
-        {
-            StartClient();
-        }
+        // if (selectedIP == IPOptions.Server)
+        // {
+        //     StartServer();
+        // }
+        // else
+        // {
+        //     StartClient();
+        // }
     }
 
     public void StartServer()
