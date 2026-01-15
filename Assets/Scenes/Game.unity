@@ -640,20 +640,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '<size=30>1. Kas yra MONGI</size>
-
-    asdas
-
-    asfsdf
-
-    asdfsadf
-
-    safd
-
-'
+  m_text: 'Total: 12'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d1300b27ebe1c3c0285d1901dbf276ab, type: 2}
-  m_sharedMaterial: {fileID: 9055068757496566, guid: d1300b27ebe1c3c0285d1901dbf276ab, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: fa20f4402a4a6611e9bbcd3ea1da2c39, type: 2}
+  m_sharedMaterial: {fileID: -5795245726026167329, guid: fa20f4402a4a6611e9bbcd3ea1da2c39, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -913,35 +903,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StartGameLoop
   ShowTopMostFoldoutHeaderGroup: 1
-  quizData:
-  - questionText: A
-    answers:
-    - dsfsdfsdf
-    - 3
-    - dsad
-    - 123
-    correctAnswerIndex: 0
-  - questionText: B
-    answers:
-    - dsfsdfsdf
-    - adf
-    - sdf
-    - sdf
-    correctAnswerIndex: 1
-  - questionText: C
-    answers:
-    - dsfsdfsdf
-    - sdf
-    - 333
-    - 656
-    correctAnswerIndex: 2
-  - questionText: D
-    answers:
-    - dsfsdfsdf
-    - sdf
-    - 333
-    - 656
-    correctAnswerIndex: 3
+  quizData: []
   whiteboardText: {fileID: 338906703}
   timerText: {fileID: 1239856353}
   chairPositions: []
