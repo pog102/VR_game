@@ -52,6 +52,7 @@ public class StartGameLoop : NetworkBehaviour
 
     #region Game Logic
     public void Start()
+    // public override void OnNetworkSpawn()
     {
         NetworkManager.Singleton.OnClientConnectedCallback += OnClinetConnectedClientRpc;
         NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnectedClientRpc;
@@ -63,7 +64,8 @@ public class StartGameLoop : NetworkBehaviour
         SubmitPlayerDataServerRpc(Globals.playerName, Globals.gender);
         if (currentState.Value != GameState.Lobby)
             return;
-        whiteboardText.text = $"Total:  {NetworkManager.Singleton.ConnectedClients.Count}";
+        // whiteboardText.text = $"Total:  {NetworkManager.Singleton.ConnectedClients.Count}";
+        timerText.text = $"{NetworkManager.Singleton.ConnectedClients.Count}";
     }
 
     [ClientRpc]

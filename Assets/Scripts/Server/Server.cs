@@ -9,56 +9,44 @@ public class Server : NetworkBehaviour
 {
     public enum IPOptions
     {
-        Server,
-
-        [InspectorName("Client (wireless)")]
-        Client,
-
-        [InspectorName("Client (wired)")]
-        Test2,
-        Test,
+        Namie,
+        Kolegijoje,
     }
-
+    // [SerializeField] private IPOptions selectedIP = IPOptions.Server;
+#if UNITY_EDITOR
+    [Header("Editor only")]
     [SerializeField]
-    private IPOptions selectedIP = IPOptions.Server;
+    private IPOptions selectedIP = IPOptions.Namie;
+#endif
 
-    public string ClientIP
+    // [SerializeField]
+    // private IPOptions selectedIP = IPOptions.Server;
+
+    private string ClientIP
     {
         get
         {
-            switch (selectedIP)
-            {
-                case IPOptions.Server:
-                    return "0.0.0.0";
-                case IPOptions.Client:
-                    return "192.168.4.1";
-                case IPOptions.Test:
-                    return "192.168.1.69";
-                case IPOptions.Test2:
-                    return "172.16.19.167";
-                default:
-                    return "0.0.0.0";
-            }
+#if UNITY_EDITOR
+            return selectedIP == IPOptions.Namie ? "192.168.1.69" : "172.16.19.167";
+#elif UNITY_ANDROID
+            return "192.168.4.1"; // or public IP
+#else
+            return "0.0.0.0";
+#endif
         }
     }
 
     [SerializeField]
     UnityTransport transport;
 
-    private int totalPlayers = 0;
-
     void Start()
     {
-        
-        if (selectedIP == IPOptions.Server)
-        {
-            StartServer();
-        }
-        else
-        {
-            SetIpAddress();
-            StartClient();
-        }
+#if UNITY_EDITOR || UNITY_ANDROID
+        SetIpAddress();
+        StartClient();
+#elif UNITY_SERVER
+        StartServer();
+#endif
     }
 
     public void StartServer()
@@ -99,38 +87,4 @@ public class Server : NetworkBehaviour
     {
         Debug.Log($"[CLIENT] Received message from server: {message}");
     }
-
-    // public override void OnNetworkSpawn()
-    // {
-    //     if (IsClient)
-    //     {
-    //         SubmitPlayerDataServerRpc(Globals.playerName, Globals.gender);
-    //     }
-    // }
-
-    // public struct PlayerScoreData : INetworkSerializable
-    // {
-    //     public Unity.Collections.FixedString32Bytes playerName;
-    //     public int score;
-    //
-    //     // Required for Netcode to send this data over the internet
-    //     public void NetworkSerialize<T>(T serializer)
-    //         where T : IReaderWriter
-    //     {
-    //         serializer.SerializeValue(ref playerName);
-    //         serializer.SerializeValue(ref score);
-    //     }
-    // }
-
-    // [ServerRpc(RequireOwnership = false)]
-    // private void SubmitPlayerDataServerRpc(
-    //     string playerName,
-    //     string gender,
-    //     ServerRpcParams rpcParams = default
-    // )
-    // {
-    //     ulong clientId = rpcParams.Receive.SenderClientId;
-    //
-    //     Debug.Log($"[SERVER] Client {clientId} | Name: {playerName} | Gender: {gender}");
-    // }
 }
