@@ -49,12 +49,14 @@ public class Server : NetworkBehaviour
 
     void Start()
     {
+        
         if (selectedIP == IPOptions.Server)
         {
             StartServer();
         }
         else
         {
+            SetIpAddress();
             StartClient();
         }
     }
