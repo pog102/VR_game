@@ -199,7 +199,7 @@ public class StartGameLoop : NetworkBehaviour
     [ClientRpc]
     private void UpdateTimerUIClientRpc(int seconds)
     {
-        timerText.text = $"Time: {seconds}s";
+        timerText.text = $"{seconds}";
     }
 
     public void SubmitAnswer(int answerIndex)
