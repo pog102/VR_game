@@ -132,12 +132,13 @@ Material:
     - _UVSec: 0
     - _VertexOcclusion: 1
     - _WorkflowMode: 1
+    - _XRMotionVectorsPass: 1
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 0, b: 0, a: 1}
     - _Color: {r: 1, g: 0, b: 0, a: 1}
     - _DiffuseColour: {r: 0.9191176, g: 0.2770403, b: 0.08785681, a: 1}
-    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _EmissionColor: {r: 2.9960787, g: 0, b: 0, a: 1}
     - _RimColour: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _SnowColour: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _SnowSpecularColour: {r: 0.5, g: 0.5, b: 0.5, a: 1}
