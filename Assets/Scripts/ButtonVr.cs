@@ -8,21 +8,21 @@ public class ButtonVr : MonoBehaviour
     public GameObject button;
     public UnityEvent onPress;
     public UnityEvent onRelease;
-    private static bool changeColor = true; // 👈 shared by all buttons
+
+    // private static bool changeColor = true; // 👈 shared by all buttons
     GameObject presser;
     private bool isPressed;
-    private Material mat;
+    public static Material mat;
 
     void Start()
     {
         isPressed = false;
-        mat = button.GetComponent<Renderer>().material;
     }
 
     public void ResetLigt()
     {
         mat.DisableKeyword("_EMISSION");
-        changeColor = false;
+        // changeColor = false;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -34,11 +34,13 @@ public class ButtonVr : MonoBehaviour
             onPress.Invoke();
             isPressed = true;
         }
-        if (changeColor && EnableLight)
+        // if (EnableLight)
+        if ((mat == null || !mat.IsKeywordEnabled("_EMISSION")) && EnableLight)
         {
+            mat = button.GetComponent<Renderer>().material;
             mat.EnableKeyword("_EMISSION");
             // mat.SetColor("_EmissionColor", Color.white);
-            changeColor = false;
+            // changeColor = false;
         }
     }
 

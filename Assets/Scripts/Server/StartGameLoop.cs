@@ -123,6 +123,7 @@ public class StartGameLoop : NetworkBehaviour
             currentState.Value = GameState.Results;
             ShowCorrectAnswerClientRpc(currentQuestionIndex.Value);
             currentQuestionIndex.Value++;
+            // Resets the emision of the button
         }
     }
 
@@ -166,6 +167,7 @@ public class StartGameLoop : NetworkBehaviour
     [ClientRpc]
     private void ShowCorrectAnswerClientRpc(int questionIndex)
     {
+        // ButtonVr.mat.DisableKeyword("_EMISSION");
         char ans;
         switch (quizData[questionIndex].correctAnswerIndex)
         {
@@ -191,6 +193,7 @@ public class StartGameLoop : NetworkBehaviour
     [ClientRpc]
     private void UpdateWhiteboardClientRpc(int questionIndex)
     {
+        ButtonVr.mat.DisableKeyword("_EMISSION");
         var q = quizData[questionIndex];
         whiteboardText.text =
             $"{q.questionText}\n\n"
