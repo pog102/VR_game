@@ -16,8 +16,4 @@ public class NameTagAtPlayer : MonoBehaviour
         transform.LookAt(cam);
         transform.Rotate(0, 180, 0);
     }
-    // void Update()
-    // {
-    //     transform.LookAt(cam);
-    // }
 }

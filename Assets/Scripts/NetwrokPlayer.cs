@@ -1,3 +1,4 @@
+using TMPro;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -19,6 +20,7 @@ public class NetwrokPlayer : NetworkBehaviour
     {
         base.OnNetworkSpawn();
         // localCameraTransform = Camera.main.transform;
+        nameTag.GetComponent<TextMeshPro>().text = Globals.playerName;
         if (IsOwner)
         {
             // nameTag.enabled = false;
@@ -44,7 +46,7 @@ public class NetwrokPlayer : NetworkBehaviour
             // nameTag.position = VrRigReference.Singleton.head.position;
             // nameTag.rotation = VrRigReference.Singleton.head.rotation;
             // nameTag.transform.position = VrRigReference.Singleton.root.position;
-            nameTag.transform.position = head.position + Vector3.up * 0.25f;
+            nameTag.transform.position = head.position + Vector3.up * 0.35f;
             // nameTag.transform.LookAt(cam);
             // nameTag.transform.rotation = VrRigReference.Singleton.root.rotation;
             // nameTag.transform.Rotate(trans);
