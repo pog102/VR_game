@@ -10,4 +10,6 @@ done < "$IPS_FILE"
 
 echo "Installing APK on all connected devices..."
 adb install -r "$APK"
+# adb shell monkey -p com.yourcompany.yourapp -c android.intent.category.LAUNCHER 1
+
 
