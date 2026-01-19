@@ -92,11 +92,24 @@ public class StartGameLoop : NetworkBehaviour
         ServerRpcParams rpcParams = default
     )
     {
-        ulong ClientId = rpcParams.Receive.SenderClientId;
-        playerNames.Add(ClientId, playerName);
+        ulong clientId = rpcParams.Receive.SenderClientId;
+        // playerNames.Add(ClientId, playerName);
         // gender.Add(ClientId,gender);
-        playerScores.Add(ClientId, 0);
-        Debug.Log($"ID:{ClientId}|Name:{playerNames[ClientId]}|Score:{playerScores[ClientId]}");
+        // playerScores.Add(ClientId, 0);
+        if (!playerNames.ContainsKey(clientId))
+        {
+            playerNames.Add(clientId, playerName);
+            playerScores.Add(clientId, 0);
+        }
+        if (NetworkManager.Singleton.ConnectedClients.TryGetValue(clientId, out var client))
+        {
+            var playerScript = client.PlayerObject.GetComponent<NetwrokPlayer>();
+            if (playerScript != null)
+            {
+                playerScript.playerName.Value = playerName;
+            }
+        }
+        Debug.Log($"ID:{clientId}|Name:{playerNames[clientId]}|Score:{playerScores[clientId]}");
     }
 
     [ServerRpc(RequireOwnership = false)]
