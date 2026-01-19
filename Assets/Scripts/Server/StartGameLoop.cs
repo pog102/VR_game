@@ -208,7 +208,10 @@ public class StartGameLoop : NetworkBehaviour
             $"{q.questionText}\n\n"
             + $"A: {q.answers[0]} | B: {q.answers[1]}\n"
             + $"C: {q.answers[2]} | D: {q.answers[3]}";
-        ButtonVr.mat.DisableKeyword("_EMISSION");
+        if (ButtonVr.mat != null)
+        {
+            ButtonVr.mat.DisableKeyword("_EMISSION");
+        }
     }
 
     [ClientRpc]
