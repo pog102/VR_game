@@ -32,6 +32,12 @@ public class StartGameLoop : NetworkBehaviour
     private TextMeshProUGUI whiteboardText;
 
     [SerializeField]
+    private AudioSource SoundCorrect;
+
+    [SerializeField]
+    private AudioSource SoundBad;
+
+    [SerializeField]
     private TextMeshProUGUI timerText;
 
     [SerializeField]
@@ -43,7 +49,8 @@ public class StartGameLoop : NetworkBehaviour
         GameState.Lobby
     );
     private NetworkVariable<int> currentQuestionIndex = new NetworkVariable<int>(0);
-    private NetworkVariable<bool> isSumbmited = new NetworkVariable<bool>(false);
+
+    // private NetworkVariable<bool> isSumbmited = new NetworkVariable<bool>(false);
     private NetworkVariable<float> timeRemaining = new NetworkVariable<float>(30f);
 
     // Server-side only score tracking
@@ -61,9 +68,11 @@ public class StartGameLoop : NetworkBehaviour
     [ClientRpc]
     public void OnClinetConnectedClientRpc(ulong connectionId)
     {
-        SubmitPlayerDataServerRpc(Globals.playerName, Globals.gender);
         if (currentState.Value != GameState.Lobby)
+        {
             return;
+        }
+        SubmitPlayerDataServerRpc(Globals.playerName, Globals.gender);
         // whiteboardText.text = $"Total:  {NetworkManager.Singleton.ConnectedClients.Count}";
         timerText.text = $"{NetworkManager.Singleton.ConnectedClients.Count}";
     }
@@ -97,6 +106,7 @@ public class StartGameLoop : NetworkBehaviour
             return;
 
         // TeleportPlayersToChairsClientRpc();
+        // currentQuestionIndex.Value = 0;
         currentState.Value = GameState.Results;
         StartNextQuestion();
     }
@@ -193,12 +203,12 @@ public class StartGameLoop : NetworkBehaviour
     [ClientRpc]
     private void UpdateWhiteboardClientRpc(int questionIndex)
     {
-        ButtonVr.mat.DisableKeyword("_EMISSION");
         var q = quizData[questionIndex];
         whiteboardText.text =
             $"{q.questionText}\n\n"
             + $"A: {q.answers[0]} | B: {q.answers[1]}\n"
             + $"C: {q.answers[2]} | D: {q.answers[3]}";
+        ButtonVr.mat.DisableKeyword("_EMISSION");
     }
 
     [ClientRpc]
@@ -241,11 +251,29 @@ public class StartGameLoop : NetworkBehaviour
         if (answerIndex == currentQ.correctAnswerIndex)
         {
             // Calculate score: Points = 100 + (seconds remaining * 10)
+            PlaySoundClientRpc(true);
             int points = 100 + Mathf.RoundToInt(timeRemaining.Value * 10);
             playerScores[clientId] += points;
             Debug.Log($"Client {clientId} got it right! Total: {playerScores[clientId]}");
         }
+        else
+        {
+            PlaySoundClientRpc(false);
+        }
         CheckAllPlayersAnswered();
+    }
+
+    [ClientRpc]
+    private void PlaySoundClientRpc(bool isCorrect)
+    {
+        if (isCorrect)
+        {
+            SoundCorrect.Play();
+        }
+        else
+        {
+            SoundBad.Play();
+        }
     }
 
     // [ServerRpc(RequireOwnership = false)]
