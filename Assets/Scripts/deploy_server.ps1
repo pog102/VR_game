@@ -1,4 +1,4 @@
-$dir = "build\server"
+$dir = "builds\server"
 $server = "vruser@172.16.19.167"
 $remotePath = "/home/vruser"
 

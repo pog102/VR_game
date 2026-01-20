@@ -39,7 +39,8 @@ public class StartGameLoop : NetworkBehaviour
 
     [SerializeField]
     private TextMeshProUGUI timerText;
-
+    [SerializeField]
+    private GameObject  LocalVrPlayer;
     [SerializeField]
     private Transform[] chairPositions;
     private HashSet<ulong> playersWhoAnswered = new HashSet<ulong>();
@@ -118,7 +119,7 @@ public class StartGameLoop : NetworkBehaviour
         if (currentState.Value != GameState.Lobby)
             return;
 
-        // TeleportPlayersToChairsClientRpc();
+        TeleportPlayersToChairsClientRpc();
         // currentQuestionIndex.Value = 0;
         currentState.Value = GameState.Results;
         StartNextQuestion();
@@ -176,14 +177,14 @@ public class StartGameLoop : NetworkBehaviour
     private void TeleportPlayersToChairsClientRpc()
     {
         // On each client, find their local player object and move them
-        var localPlayer = NetworkManager.Singleton.LocalClient.PlayerObject;
-        if (localPlayer != null)
+ 
+        if (LocalVrPlayer != null)
         {
             // Simple teleport (use a specific index or logic to avoid stacking)
-            // int index = (int)NetworkManager.Singleton.LocalClientId % chairPositions.Length;
-            int index = (int)NetworkManager.Singleton.LocalClientId;
-            localPlayer.transform.position = chairPositions[index].position;
-            localPlayer.transform.rotation = chairPositions[index].rotation;
+            int index = (int)NetworkManager.Singleton.LocalClientId % chairPositions.Length;
+            // int index = (int)NetworkManager.Singleton.LocalClientId;
+            LocalVrPlayer.transform.position = chairPositions[index].position;
+            // LocalVrPlayer.transform.rotation = chairPositions[index].rotation;
         }
     }
 
